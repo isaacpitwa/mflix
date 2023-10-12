@@ -1,6 +1,8 @@
 import Head from "next/head";
 import clientPromise from "../lib/mongodb";
 import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
+import styles from './styles.module.css'
+import Link from "next/link";
 
 type ConnectionStatus = {
   isConnected: boolean;
@@ -40,10 +42,11 @@ export default function Home({
       <p>
         <small>(According to Metacritic)</small>
       </p>
-      <ul>
+      <ul className={styles.movieList}>
         {movies.map((movie) => (
-          <li>
-            <h2>{movie.title}</h2>
+          <li key={movie._id} className={styles.movieCard}>
+             <img className="w-20" src={movie.poster} alt={movie.title}/>
+            <h2 className="text-3xl font-bold underline"><Link href={`/movie/${movie._id}`}>{movie.title}</Link></h2>
             <h3>{movie.metacritic}</h3>
             <p>{movie.plot}</p>
           </li>
